@@ -4,8 +4,8 @@
 name: Java CI with Maven
 
 env:
-  springopsfile: ${{ 'sample.yaml' }}
-  version: ${{ 'v1' }}
+  springopsfile: springops/sample.yaml
+  version: V1
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ env.version }}
+        # tag_name: ${{ env.version }}
         release_name: TheArtifact
         draft: true
         prerelease: false
