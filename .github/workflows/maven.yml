@@ -25,15 +25,6 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
       
-    - name: 'Create release'
-      uses: ncipollo/release-action@v1.8.10
-      with:
-        artifact: ./target/springopsdemo-0.0.1-SNAPSHOT.jar
-        body: 'Sample jar for SpringOps'
-        draft: false
-        name: 'SampleArtifact'
-        # Indicates if the release body should be omitted.
-
     - name: Create Draft Release
       id: create_release
       uses: actions/create-release@v1
