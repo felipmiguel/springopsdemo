@@ -76,6 +76,6 @@ jobs:
        destination_folder: '/'
        user_email: 'fmiguel@microsoft.com'
        user_name: 'felipmiguel'
-       commit_message: Committing file ${{ env.springopsfile} }
+       commit_message: Committing file ${{ env.springopsfile}}
         
 
