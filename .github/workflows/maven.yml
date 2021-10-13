@@ -27,7 +27,8 @@ jobs:
     - name: Create Release
   # You may pin to the exact commit or the version.
   # uses: ncipollo/release-action@c4bf6c1ab090090498fb7f3ddc9f99ba5ab619b9
-    - uses: ncipollo/release-action@v1.8.10
+    - name: 'Create release'
+      uses: ncipollo/release-action@v1.8.10
       with:
         artifact: ./target/springopsdemo-0.0.1-SNAPSHOT.jar
         body: 'Sample jar for SpringOps'
