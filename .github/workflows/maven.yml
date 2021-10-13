@@ -3,6 +3,10 @@
 
 name: Java CI with Maven
 
+env:
+  springopsfile: ${{ 'sample.yaml' }}
+  version: ${{ 'v1' }}
+
 on:
   push:
     branches: [ master ]
@@ -31,11 +35,33 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1
+        tag_name: ${{env.version}}
         release_name: TheArtifact
         draft: true
         prerelease: false
-
+       
+    - uses: actions/checkout@v2
+    - name: Find and Replace envversion
+      uses: jacobtomlinson/gha-find-replace@v2
+      with:
+        find: "{{version}}"
+        replace: ${{env.version}}
+        include: "springops/**"
+        regex: true
+        
+    - name: Push Generated yaml file to repo springops-manifests
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+       API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+       source_file:  ${{env.springopsfile}}
+       destination_repo: 'felipmiguel/springops-manifests'
+       destination_folder: '/'
+       user_email: 'fmiguel@microsoft.com'
+       user_name: 'felipmiguel'
+       commit_message: Committing file ${{env.springopsfile}}
+                
+        
     - uses: actions/upload-release-asset@v1.0.1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,3 +76,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_id: ${{ steps.create_release.outputs.id }}
+        
+
