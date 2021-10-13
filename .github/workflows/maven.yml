@@ -77,5 +77,6 @@ jobs:
        user_email: 'fmiguel@microsoft.com'
        user_name: 'felipmiguel'
        commit_message: Committing file ${{ env.springopsfile}}
+       destination_branch: 'master'
         
 
