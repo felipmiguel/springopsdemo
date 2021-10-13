@@ -24,9 +24,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Create Release
-  # You may pin to the exact commit or the version.
-  # uses: ncipollo/release-action@c4bf6c1ab090090498fb7f3ddc9f99ba5ab619b9
+      
     - name: 'Create release'
       uses: ncipollo/release-action@v1.8.10
       with:
