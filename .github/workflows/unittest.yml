@@ -1,36 +1,36 @@
-# This is a basic workflow to help you get started with Actions
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: CI
+name: Java CI with Maven
 
-# Controls when the workflow will run
+env:
+  springopsfile: springops/sample.yaml
+  version: V3
+
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - name: Push Generated yaml file to repo springops-manifests
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+       API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      with:
+       source_file:  ${{ env.springopsfile }}
+       destination_repo: 'felipmiguel/springops-manifests'
+       destination_folder: '/'
+       user_email: 'fmiguel@microsoft.com'
+       user_name: 'felipmiguel'
+       commit_message: Committing file ${{ env.springopsfile}}
+       destination_branch: 'master'
+        
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
