@@ -4,6 +4,7 @@
 name: Java CI with Maven
 
 env:
+  springopsdir: springops
   springopsfile: springops/sample.yaml
   version: V3
 
@@ -15,22 +16,15 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Push Generated yaml file to repo springops-manifests
-      uses: dmnemec/copy_file_to_another_repo_action@main
-      env:
-       API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      with:
-       source_file:  ${{ env.springopsfile }}
-       destination_repo: 'felipmiguel/springops-manifests'
-       destination_folder: '/'
-       user_email: 'fmiguel@microsoft.com'
-       user_name: 'felipmiguel'
-       commit_message: Committing file ${{ env.springopsfile}}
-       destination_branch: 'master'
-        
-
+     - name: Pushes to another repository
+       uses: cpina/github-action-push-to-another-repository@main
+       env:
+         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+       with:
+         source-directory: ${{ env.springopsdir }}'
+         destination-github-username: 'felipmiguel'
+         destination-repository-name: 'springops-manifests'
+         user-email: fmiguel@microsoft.com
+         target-branch: master
