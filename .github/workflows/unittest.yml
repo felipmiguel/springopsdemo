@@ -1,0 +1,32 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Test move file to repo
+
+env:
+  springopsdir: springops
+  springopsfile: springops/sample.yaml
+  version: V3
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Pushes to another repository
+       uses: cpina/github-action-push-to-another-repository@main
+       env:
+         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+       with:
+         source-directory: ${{ env.springopsdir }}'
+         destination-github-username: 'felipmiguel'
+         destination-repository-name: 'springops-manifests'
+         user-email: fmiguel@microsoft.com
+         target-branch: master
+        
+

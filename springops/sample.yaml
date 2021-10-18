@@ -1,6 +1,6 @@
 appName: "demo"
-version: "{{version}}"
-artifactsSource: "https://github.com/felipmiguel/springopsdemo/releases/download/{{version}}/theartifact.jar"
+version: $$version$$
+artifactsSource: "https://github.com/felipmiguel/springopssamples/releases/download/Release0/spring-cloud-microservice-0.0.1-SNAPSHOT.jar"
 blueGreen: true
 instanceCount: 2
 environmentVariables:
