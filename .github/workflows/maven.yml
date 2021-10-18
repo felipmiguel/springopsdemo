@@ -5,7 +5,7 @@ name: Java CI with Maven
 
 env:
   springopsfile: springops/sample.yaml
-  version: V3
+  version: V4
 
 on:
   push:
